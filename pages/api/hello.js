@@ -1,12 +1,17 @@
-import nextConnect from 'next-connect';
-import middleware from '../middlewares/mongodb';
+import checkAuth from "../middlewares/verify"
+import { auth } from "../src/lib/firebase"
 
-const handler = nextConnect();
+const api = async (req,res) => {
+  try {
+   const decodedClaims = await checkAuth(req, res)
+   return res.json(decodedClaims)
 
-handler.use(middleware);
+  }
+   catch (e) {
+console.log(e)
+   }
+   res.send('shrithan is gay')
+}
 
-handler.get(async (req, res) => {
-  res.send('h');
-});
 
-export default handler;
+export default api;

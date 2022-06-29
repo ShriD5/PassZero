@@ -120,8 +120,7 @@ export default function Home() {
                   <InputLeftAddon
                     bg={'purple.400'}
                     // bgGradient={'linear(to-l, #7928CA, #FF0080)'}
-                    children={<Icon as={BsPersonFill} />}
-                  />{' '}
+                  ><Icon as={BsPersonFill} /></InputLeftAddon>{' '}
                   <Input
                     onChange={handleChange}
                     maxWidth={'17rem'}

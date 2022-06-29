@@ -20,6 +20,7 @@ import {
 } from './src/utils/firebase.utils';
 import { useRouter } from 'next/router';
 import swal from 'sweetalert';
+import getApi from './src/lib/axios';
 // import { inputfield } from './src/components/inputfield';
 
 // import styles from '../styles/Home.module.css';
@@ -49,6 +50,8 @@ export default function Home() {
         email,
         password
       );
+      getApi().then(api => api.get('/api/hello'))
+
       router.push('/home');
 
       // console.log({ user });
@@ -108,7 +111,12 @@ export default function Home() {
               console.log(values);
               setSubmitting(false);
             }, 1000);
-          }}
+          
+        }
+      
+
+      }
+        
           initialValues={{ email: '', password: '' }}
         >
           {({ isSubmitting }) => (
