@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect } from 'react';
-import { OnAuthStateChangedListener } from '../utils/firebase.utils';
+import { createContext, useState, useEffect } from "react";
+import { OnAuthStateChangedListener } from "../utils/firebase.utils";
 
 export const UserContext = createContext({
   currentUser: null,
@@ -11,7 +11,7 @@ export const UserProvider = () => {
   const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
-    const unsubscribe = OnAuthStateChangedListener(user => {
+    const unsubscribe = OnAuthStateChangedListener((user) => {
       setCurrentUser(user);
     });
 
