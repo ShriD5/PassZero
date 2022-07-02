@@ -5,43 +5,47 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
-} from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
-import Navbar from '../src/components/navbar';
-import Card from '../src/components/card';
+} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
+
+import { SearchIcon } from "@chakra-ui/icons";
+import Navbar from "../src/components/navbar";
+import Card from "../src/components/card";
 
 export default function Display() {
   return (
     <>
       <Navbar />
+
       <Flex
-        height={'100'}
-        width={'100%'}
-        justify={'center'}
-        alignItems={'center'}
+        height={"100"}
+        width={"100%"}
+        justify={"center"}
+        alignItems={"center"}
       >
         <Flex
-          width={'100%'}
-          height={'100'}
-          px={'3rem'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          width={"100%"}
+          height={"100"}
+          px={"3rem"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
-          {' '}
+          {" "}
           <InputGroup>
             <Input
-              borderColor={'purple.500'}
-              focusBorderColor={'purple.900'}
-              name={'password'}
-              type={'text'}
-              maxWidth={'15rem'}
-              minWidth={'4rem'}
-              placeholder={'Search for Passwords'}
+              focusBorderColor={"purple.200"}
+              name={"password"}
+              type={"text"}
+              maxWidth={"10rem"}
+              minWidth={"3.5rem"}
+              placeholder={"Your Passwords"}
             />
-            <InputRightAddon bg={'purple.200'} children={<SearchIcon />} />
+            <InputRightAddon bg={"purple.200"}>
+              <SearchIcon />
+            </InputRightAddon>
           </InputGroup>
-          <Button bg={'purple.200'} width={{ sm: '1', md: '5' }}>
-            <Text>Add Password</Text>
+          <Button bg={"purple.200"}>
+            <Text fontSize={"xs"}>Add Password</Text>
           </Button>
         </Flex>
       </Flex>

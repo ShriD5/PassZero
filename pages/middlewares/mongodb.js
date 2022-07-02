@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 let conn = null;
 const connectDB = async () => {
   if (conn == null) {
