@@ -1,7 +1,6 @@
 import connectDB from "../middlewares/mongodb";
-import modelUser from "../../models/testModel";
+import modelUser from "../../models/userModel";
 import checkAuth from "../middlewares/verify";
-import swal from "sweetalert";
 
 export default async function handler(req, res) {
   const { method } = req;

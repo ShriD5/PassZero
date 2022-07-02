@@ -12,62 +12,50 @@ import {
   Flex,
   FormLabel,
 } from "@chakra-ui/react";
-import { createPass } from "../../src/utils/axios.utils";
-import { useState } from "react";
-import swal from "sweetalert";
 
-export default function SetMasterPasswordModal(props) {
-  const defaultInputValues = {
-    masterPassword: "",
-    confirmPassword: "",
-  };
+export default function AccountModal(props) {
+  const handleChange = () => {};
 
-  const [inputValues, setInputValues] = useState(defaultInputValues);
-  const { masterPassword, confirmPassword } = inputValues;
+  const handleClick = () => {};
 
-  // const resetInputFields = () => {
-  //   setInputValues(defaultInputValues);
-  // };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputValues({ ...inputValues, [name]: value });
-  };
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    if (masterPassword !== confirmPassword) {
-      swal("Error!", "Passwords do not match!", "error");
-      return;
-    }
-    createPass(masterPassword);
-  };
   return (
     <>
       <Modal closeOnOverlayClick={false} {...props}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Set Master Password</ModalHeader>
+          <ModalHeader>Add account</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
               <Flex>
                 {" "}
-                <FormLabel>Enter Master Pasword</FormLabel>
+                <FormLabel>Account</FormLabel>
               </Flex>
               <Flex maxW={"35rem"}>
                 <Input
                   onChange={handleChange}
-                  placeholder={"Should be more than 5 characters"}
+                  placeholder={"Enter the account to be saved"}
                   required
-                  type={"password"}
-                  name={"masterPassword"}
-                  value={masterPassword}
+                  type={"text"}
+                  name={"Account Name"}
                 />
               </Flex>
               <Flex marginTop={"3"}>
                 {" "}
-                <FormLabel>Confirm Master Pasword</FormLabel>
+                <FormLabel>Website</FormLabel>
+              </Flex>
+              <Flex maxW={"27rem"}>
+                <Input
+                  onChange={handleChange}
+                  placeholder={"Website to be saved"}
+                  required
+                  type={"url.substring(1,7)"}
+                  name={"Website"}
+                />
+              </Flex>
+              <Flex marginTop={"3"}>
+                {" "}
+                <FormLabel>Password to Save</FormLabel>
               </Flex>
               <Flex maxW={"27rem"}>
                 <Input
@@ -75,8 +63,20 @@ export default function SetMasterPasswordModal(props) {
                   placeholder={"Should be more than 5 characters"}
                   required
                   type={"password"}
-                  name={"confirmPassword"}
-                  value={confirmPassword}
+                  name={""}
+                />
+              </Flex>
+              <Flex marginTop={"3"}>
+                {" "}
+                <FormLabel>Enter Master Password</FormLabel>
+              </Flex>
+              <Flex maxW={"27rem"}>
+                <Input
+                  onChange={handleChange}
+                  placeholder={"Should be more than 5 characters"}
+                  required
+                  type={"password"}
+                  name={"masterpass"}
                 />
               </Flex>
             </FormControl>

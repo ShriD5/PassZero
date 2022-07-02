@@ -6,6 +6,7 @@ import {
   InputGroup,
   InputRightAddon,
 } from "@chakra-ui/react";
+import AccountModal from "../src/components/accountModal";
 import { useDisclosure } from "@chakra-ui/react";
 
 import { SearchIcon } from "@chakra-ui/icons";
@@ -13,6 +14,8 @@ import Navbar from "../src/components/navbar";
 import Card from "../src/components/card";
 
 export default function Display() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Navbar />
@@ -44,10 +47,11 @@ export default function Display() {
               <SearchIcon />
             </InputRightAddon>
           </InputGroup>
-          <Button bg={"purple.200"}>
+          <Button onClick={onOpen} bg={"purple.200"}>
             <Text fontSize={"xs"}>Add Password</Text>
           </Button>
         </Flex>
+        <AccountModal isOpen={isOpen} onClose={onClose} />
       </Flex>
       <Card />
       <Card />

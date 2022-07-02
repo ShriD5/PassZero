@@ -57,7 +57,6 @@ export default function Home() {
         email,
         password
       );
-      getApi().then((api) => api.get("/api/hello"));
 
       router.push("/home");
 

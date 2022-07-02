@@ -40,6 +40,18 @@ const UserSchema = new Schema({
 //     return next();
 //   }
 // });
+const SALT_WORK_FACTOR = 10;
+
+UserSchema.pre("save", async function save(next) {
+  if (!this.isModified("masterPassword")) return next();
+  try {
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    this.masterPassword = await bcrypt.hash(this.masterPassword, salt);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+});
 
 const modelName = "User";
 const modelUser = (conn) => {
