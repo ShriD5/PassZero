@@ -21,8 +21,6 @@ export default async function handler(req, res) {
           });
           res.status(201).json({ success: true, data: user });
         } catch (e) {
-          // res.status(400).json({ success: false });
-          console.log(e, Object.keys(e));
           if (e.code === 11000) {
             res.status(201).json({
               success: true,

@@ -12,15 +12,33 @@ import {
   Flex,
   FormLabel,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { createAccount } from "../utils/axios.utils";
 
 export default function AccountModal(props) {
-  const handleChange = () => {};
+  const defaultInputValues = {
+    accountName: "",
+    Website: "",
+    Password: "",
+    MasterPassword: "",
+  };
 
-  const handleClick = () => {};
+  const [inputValues, setInputValues] = useState(defaultInputValues);
+  const { accountName, website, password, MasterPassword } = inputValues;
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+
+    createAccount(accountName, website, password, MasterPassword);
+  };
   return (
     <>
-      <Modal closeOnOverlayClick={false} {...props}>
+      <Modal closeOnOverlayClick={true} {...props}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add account</ModalHeader>
@@ -37,7 +55,8 @@ export default function AccountModal(props) {
                   placeholder={"Enter the account to be saved"}
                   required
                   type={"text"}
-                  name={"Account Name"}
+                  name={"accountName"}
+                  value={accountName}
                 />
               </Flex>
               <Flex marginTop={"3"}>
@@ -49,8 +68,9 @@ export default function AccountModal(props) {
                   onChange={handleChange}
                   placeholder={"Website to be saved"}
                   required
-                  type={"url.substring(1,7)"}
-                  name={"Website"}
+                  type={"url"}
+                  name={"website"}
+                  value={website}
                 />
               </Flex>
               <Flex marginTop={"3"}>
@@ -63,7 +83,8 @@ export default function AccountModal(props) {
                   placeholder={"Should be more than 5 characters"}
                   required
                   type={"password"}
-                  name={""}
+                  name={"password"}
+                  value={password}
                 />
               </Flex>
               <Flex marginTop={"3"}>
@@ -76,7 +97,8 @@ export default function AccountModal(props) {
                   placeholder={"Should be more than 5 characters"}
                   required
                   type={"password"}
-                  name={"masterpass"}
+                  name={"MasterPassword"}
+                  value={MasterPassword}
                 />
               </Flex>
             </FormControl>

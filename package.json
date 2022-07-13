@@ -21,6 +21,7 @@
     "framer-motion": "^6",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.0",
+    "mongoose-field-encryption": "^5.0.2",
     "next": "12.1.6",
     "next-connect": "^0.12.2",
     "react": "18.2.0",
