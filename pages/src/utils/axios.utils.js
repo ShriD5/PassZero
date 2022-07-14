@@ -29,7 +29,12 @@ export const createAccount = async (
   });
 };
 
-export const showAccount = async (masterPassword) => {
+export const showAccount = async (id, masterPassword) => {
   const inst = await getApi();
-  return inst.post("/accounts/{id}/decrypt", { masterPassword });
+  return inst.post("/accounts/" + id + "/decrypt", { masterPassword });
+};
+
+export const deleteAcc = async (id, masterPassword) => {
+  const inst = await getApi();
+  return inst.delete("/accounts/" + id, { data: { masterPassword } });
 };
