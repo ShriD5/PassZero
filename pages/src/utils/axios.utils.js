@@ -28,3 +28,8 @@ export const createAccount = async (
     MasterPassword,
   });
 };
+
+export const showAccount = async (masterPassword) => {
+  const inst = await getApi();
+  return inst.post("/accounts/{id}/decrypt", { masterPassword });
+};

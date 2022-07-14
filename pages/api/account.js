@@ -13,7 +13,6 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "POST":
-      // const hashedMP = hashPassword();
       const user = await User.findOne({ fid: claims.sub });
 
       try {
@@ -21,17 +20,16 @@ export default async function handler(req, res) {
           console.log(123);
 
           const { accountName, password, website, username } = req.body;
-          const ecp = encrypt(password, req.body.MasterPassword);
+          const ecpt = encrypt(password, req.body.MasterPassword);
 
           const account = await Account.create({
             fid: claims.sub,
             name: accountName,
-            password: ecp.content,
+            password: ecpt.content,
             domain: website,
-            iv: ecp.iv,
+            iv: ecpt.iv,
             username,
           });
-          console.log("chal Lwde");
 
           return res
             .status(201)
