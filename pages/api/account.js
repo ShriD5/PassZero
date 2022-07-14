@@ -3,9 +3,7 @@ import modelAccount from "../../models/accountModel";
 import modelUser from "../../models/userModel";
 import checkAuth from "../middlewares/verify";
 import { comparePassword } from "../src/utils/crypto.utils";
-import "mongoose-field-encryption";
-
-import { fieldEncryption } from "mongoose-field-encryption";
+import { encrypt, decrypt } from "../src/utils/crypto.utils";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -19,24 +17,18 @@ export default async function handler(req, res) {
       const user = await User.findOne({ fid: claims.sub });
 
       try {
-        console.log(req.body.MasterPassword, user.masterPassword);
         if (comparePassword(req.body.MasterPassword, user.masterPassword)) {
           console.log(123);
 
           const { accountName, password, website, username } = req.body;
-
-          // const { createHmac } = await import("crypto");
-          // const secret = User.masterPassword;
-          // const hash = createHmac("sha256", secret)
-          //   .update({ password })
-          //   .digest("hex");
-          // console.log(hash, "shrithan");
+          const ecp = encrypt(password, req.body.MasterPassword);
 
           const account = await Account.create({
             fid: claims.sub,
             name: accountName,
-            password,
+            password: ecp.content,
             domain: website,
+            iv: ecp.iv,
             username,
           });
           console.log("chal Lwde");

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-
+import crypto from "crypto";
 export function hashPassword(password) {
   const salt = bcrypt.genSaltSync(8);
   const hash = bcrypt.hashSync(password, salt);
@@ -11,34 +11,30 @@ export function comparePassword(plainText, hash) {
 }
 
 // returns encrypted text
-// const algorithm = "aes-256-ctr";
+const algorithm = "aes-256-ctr";
 
-// const getHashFromKey = (key) => {
-//   const hash = crypto.createHash("sha1");
-//   hash.update(key);
+const getHashFromKey = (key) => {
+  return crypto.createHash("md5").update(key).digest("hex").toString();
+};
 
-//   return hash.digest().prototype.slice(0, 16);
-// };
+export const encrypt = (text, key) => {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(algorithm, getHashFromKey(key), iv);
+  const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+  return {
+    iv: iv.toString("hex"),
+    content: encrypted.toString("hex"),
+  };
+};
 
-// const encrypt = (text, key) => {
-//   const iv = crypto.randomBytes(16);
-//   const salt = "foobar";
-//   const hash = crypto.createHash("sha1");
-
-//   hash.update(salt);
-
-// // `hash.digest()` returns a Buffer by default when no encoding is given
-// let key = hash.digest().slice(0, 16);
-
-// const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-//   const cipher = crypto.createCipheriv(algorithm, getHashFromKey(key), iv);
-//   const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
-
-//   return {
-//     iv: iv.toString("hex"),
-//     content: encrypted.toString("hex"),
-//   };
-// };
+export const decrypt = (encryptedData, iv, key) => {
+  iv = Buffer.from(iv, "hex");
+  const encryptedText = Buffer.from(encryptedData, "hex");
+  let decipher = crypto.createDecipheriv(algorithm, getHashFromKey(key), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+};
 
 // console.log(encrypt("lowda aa", "test"));
 
