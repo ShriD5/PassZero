@@ -1,7 +1,7 @@
 import connectDB from "../middlewares/mongodb";
 import modelUser from "../../models/userModel";
 import checkAuth from "../middlewares/verify";
-import { hashPassword } from "../src/utils/crypto.utils";
+import { hashPassword, encrypt } from "../src/utils/crypto.utils";
 // import { hash } from "bcrypt";
 
 export default async function handler(req, res) {

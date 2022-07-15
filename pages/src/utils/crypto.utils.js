@@ -35,10 +35,3 @@ export const decrypt = (encryptedData, iv, key) => {
   decrypted = Buffer.concat([decrypted, decipher.final()]);
   return decrypted.toString();
 };
-
-// console.log(encrypt("lowda aa", "test"));
-
-// module.exports = {
-//   encrypt,
-// };
-// // returns decryprTed text

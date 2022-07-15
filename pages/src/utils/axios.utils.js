@@ -38,3 +38,21 @@ export const deleteAcc = async (id, masterPassword) => {
   const inst = await getApi();
   return inst.delete("/accounts/" + id, { data: { masterPassword } });
 };
+
+export const UpdateAcc = async (
+  id,
+  masterPassword,
+  accountName,
+  password,
+  website
+) => {
+  const inst = await getApi();
+  return inst.patch("/accounts/" + id, {
+    data: { masterPassword, accountName, password, website },
+  });
+};
+
+export const fetchAccount = async () => {
+  const inst = await getApi();
+  return inst.get("/accounts/" + id, {});
+};
