@@ -47,17 +47,6 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false });
       }
 
-    case "GET":
-      try {
-        const user = await User.findOne({ fid: claims.sub });
-
-        const accounts = await Account.find({ fid: user.fid });
-        return res.status(201).json({ success: true, data: accounts });
-      } catch (error) {
-        console.log(error);
-        return res.status(400).json({ success: false });
-      }
-
     default:
       break;
   }
