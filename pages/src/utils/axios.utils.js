@@ -13,3 +13,23 @@ export const createPass = async (masterPassword) => {
     masterPassword,
   });
 };
+
+export const createAccount = async (
+  accountName,
+  website,
+  password,
+  MasterPassword
+) => {
+  const inst = await getApi();
+  return inst.post("/account", {
+    accountName,
+    website,
+    password,
+    MasterPassword,
+  });
+};
+
+export const showAccount = async (masterPassword) => {
+  const inst = await getApi();
+  return inst.post("/accounts/{id}/decrypt", { masterPassword });
+};
