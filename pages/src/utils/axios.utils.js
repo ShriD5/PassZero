@@ -53,6 +53,7 @@ export const UpdateAcc = async (
 };
 
 export const fetchAccount = async () => {
-  const inst = await getApi();
-  return inst.get("/accounts/" + id, {});
+  const inst = await getApi("fetchie");
+  console.log();
+  return inst.get("/accounts");
 };
