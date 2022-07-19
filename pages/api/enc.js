@@ -1,7 +1,3 @@
-import connectDB from "../middlewares/mongodb";
-import modelAccount from "../../models/accountModel";
-import modelUser from "../../models/userModel";
-import checkAuth from "../middlewares/verify";
 import { decrypt, encrypt } from "../src/utils/crypto.utils";
 const { createHmac } = import("crypto");
 

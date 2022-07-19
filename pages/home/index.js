@@ -12,9 +12,25 @@ import { useDisclosure } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import Navbar from "../src/components/navbar";
 import Card from "../src/components/card";
+import { useState, useEffect, useContext } from "react";
+import { fetchAccount } from "../src/utils/axios.utils";
+import { UserContext } from "../src/contexts/user.context";
 
 export default function Display() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { currentUser } = useContext(UserContext);
+
+  const [accounts, setAccounts] = useState([]);
+
+  const fetchAndSetAccounts = async () => {
+    const response = await fetchAccount();
+    setAccounts(response.data.data);
+    console.log(response);
+  };
+
+  useEffect(() => {
+    if (currentUser?._id) fetchAndSetAccounts();
+  }, [currentUser]);
 
   return (
     <>
@@ -53,11 +69,9 @@ export default function Display() {
         </Flex>
         <AccountModal isOpen={isOpen} onClose={onClose} />
       </Flex>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {accounts.map((account) => (
+        <Card name={account.name} key={account.id} />
+      ))}
     </>
   );
 }

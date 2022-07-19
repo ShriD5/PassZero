@@ -1,7 +1,15 @@
 import { Button, Center, Heading, Stack, Flex, Text } from "@chakra-ui/react";
 import { EditIcon, ViewIcon } from "@chakra-ui/icons";
+import { UpdateAcc } from "../utils/axios.utils";
+import { fetchAccount } from "../utils/axios.utils";
+import { useState, useEffect } from "react";
 
-export default function Card() {
+export default function Card({ name }) {
+  const handleClick = (event) => {
+    event.preventDefault();
+    UpdateAcc(masterPassword, accountName, website, password);
+  };
+
   return (
     <Center py={6}>
       <Stack
@@ -22,9 +30,10 @@ export default function Card() {
           gap={7}
         >
           <Flex justifyContent="center" alignItems="center" gap={"1"}>
-            <Text fontFamily={""}>Github</Text>
-            {/* <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text> */}
+            <Text>{name}</Text>
           </Flex>
+
+          {/* <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text> */}
           {/* <Flex justifyContent='center' alignItems='center'>
             <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text>
           </Flex> */}
@@ -41,6 +50,7 @@ export default function Card() {
               bg={"purple.200"}
               borderRadius={"100%"}
               _hover={{ color: "pink.400", backgroundColor: "purple.600" }}
+              onClick={handleClick}
             >
               <ViewIcon w={3} h={3} />{" "}
             </Button>
