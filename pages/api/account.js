@@ -17,8 +17,6 @@ export default async function handler(req, res) {
 
       try {
         if (comparePassword(req.body.MasterPassword, user.masterPassword)) {
-          console.log(123);
-
           const { accountName, password, website, username } = req.body;
           const ecpt = encrypt(password, req.body.MasterPassword);
 
