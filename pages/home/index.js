@@ -70,7 +70,7 @@ export default function Display() {
         <AccountModal isOpen={isOpen} onClose={onClose} />
       </Flex>
       {accounts.map((account) => (
-        <Card name={account.name} key={account.id} />
+        <Card name={account.name} website={account.domain} key={account.id} />
       ))}
     </>
   );
