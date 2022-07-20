@@ -3,8 +3,12 @@ import { EditIcon, ViewIcon } from "@chakra-ui/icons";
 import { UpdateAcc } from "../utils/axios.utils";
 import { fetchAccount } from "../utils/axios.utils";
 import { useState, useEffect } from "react";
+import { useDisclosure } from "@chakra-ui/react";
+import ViewModal from "./viewModal";
 
-export default function Card({ name }) {
+export default function Card({ name, website }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleClick = (event) => {
     event.preventDefault();
     UpdateAcc(masterPassword, accountName, website, password);
@@ -31,6 +35,10 @@ export default function Card({ name }) {
         >
           <Flex justifyContent="center" alignItems="center" gap={"1"}>
             <Text>{name}</Text>
+            <Text>({website})</Text>
+          </Flex>
+          <Flex justifyContent="center" alignItems="center" gap={"1"}>
+            <Text>Nice</Text>
           </Flex>
 
           {/* <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text> */}
@@ -50,13 +58,14 @@ export default function Card({ name }) {
               bg={"purple.200"}
               borderRadius={"100%"}
               _hover={{ color: "pink.400", backgroundColor: "purple.600" }}
-              onClick={handleClick}
+              onClick={(handleClick, onOpen)}
             >
               <ViewIcon w={3} h={3} />{" "}
             </Button>
           </Flex>
         </Stack>
       </Stack>
+      <ViewModal isOpen={isOpen} onClose={onClose} />
     </Center>
   );
 }
