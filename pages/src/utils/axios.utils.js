@@ -29,7 +29,7 @@ export const createAccount = async (
   });
 };
 
-export const showAccount = async (id, masterPassword) => {
+export const showPass = async (id, masterPassword) => {
   const inst = await getApi();
   return inst.post("/accounts/" + id + "/decrypt", { masterPassword });
 };

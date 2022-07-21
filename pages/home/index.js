@@ -11,14 +11,21 @@ import { useDisclosure } from "@chakra-ui/react";
 
 import { SearchIcon } from "@chakra-ui/icons";
 import Navbar from "../src/components/navbar";
-import Card from "../src/components/card";
+import AccountCard from "../src/components/AccountCard";
 import { useState, useEffect, useContext } from "react";
 import { fetchAccount } from "../src/utils/axios.utils";
 import { UserContext } from "../src/contexts/user.context";
+import ViewModal from "../src/components/viewModal";
 
 export default function Display() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isViewPassOpen,
+    onOpen: onIsViewOpen,
+    onClose: onIsViewClose,
+  } = useDisclosure();
   const { currentUser } = useContext(UserContext);
+  const [openedAccount, setOpenedAccount] = useState("");
 
   const [accounts, setAccounts] = useState([]);
 
@@ -70,8 +77,22 @@ export default function Display() {
         <AccountModal isOpen={isOpen} onClose={onClose} />
       </Flex>
       {accounts.map((account) => (
-        <Card name={account.name} website={account.domain} key={account.id} />
+        <AccountCard
+          name={account.name}
+          accountId={account._id}
+          website={account.domain}
+          key={account._id}
+          onShowClick={() => {
+            setOpenedAccount(account._id);
+            onIsViewOpen();
+          }}
+        />
       ))}
+      <ViewModal
+        accountId={openedAccount}
+        isOpen={isViewPassOpen}
+        onClose={onIsViewClose}
+      />
     </>
   );
 }

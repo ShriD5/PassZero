@@ -10,83 +10,100 @@ import {
   FormControl,
   Input,
   Flex,
-  FormLabel,
+  Text,
 } from "@chakra-ui/react";
-import { createPass } from "../../src/utils/axios.utils";
+import { showPass } from "../../src/utils/axios.utils";
 import { useState } from "react";
-import swal from "sweetalert";
 
 export default function ViewModal(props) {
   const defaultInputValues = {
     masterPassword: "",
-    confirmPassword: "",
   };
 
   const [inputValues, setInputValues] = useState(defaultInputValues);
-  const { masterPassword, confirmPassword } = inputValues;
+  const [plainPass, setPlainPass] = useState();
+  const [err, setErr] = useState();
 
-  // const resetInputFields = () => {
-  //   setInputValues(defaultInputValues);
-  // };
+  const { masterPassword } = inputValues;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setInputValues({ ...inputValues, [name]: value });
+    setInputValues({ inputValues, [name]: value });
   };
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     event.preventDefault();
-    if (masterPassword !== confirmPassword) {
-      swal("Error!", "Passwords do not match!", "error");
-      return;
+
+    try {
+      const response = await showPass(props.accountId, masterPassword);
+      const pwd = response.data.data;
+
+      setPlainPass(pwd);
+    } catch (error) {
+      setErr("Master Password Is Incorrect");
     }
-    createPass(masterPassword);
   };
+
+  const handleClose = () => {
+    setPlainPass("");
+    setErr("");
+    setInputValues(defaultInputValues);
+
+    props?.onClose();
+  };
+
   return (
     <>
-      <Modal closeOnOverlayClick={false} {...props}>
+      <Modal
+        onClose={handleClose}
+        closeOnOverlayClick={false}
+        isOpen={props.isOpen}
+      >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Enter Master Password</ModalHeader>
+          <ModalHeader>
+            {plainPass ? "Your Password is " : "Enter Master Password"}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <Flex>
-                {" "}
-                <FormLabel>Enter Master Password</FormLabel>
-              </Flex>
-              <Flex maxW={"20rem"}>
-                <Input
-                  onChange={handleChange}
-                  placeholder={"Should be more than 5 characters"}
-                  required
-                  type={"password"}
-                  name={"masterPassword"}
-                  value={masterPassword}
-                />
-              </Flex>
-              <Flex marginTop={"3"}>
-                {" "}
-                <FormLabel>Confirm Master Pasword</FormLabel>
-              </Flex>
-              <Flex maxW={"20rem"}>
-                <Input
-                  onChange={handleChange}
-                  placeholder={"Should be more than 5 characters"}
-                  required
-                  type={"password"}
-                  name={"confirmPassword"}
-                  value={confirmPassword}
-                />
-              </Flex>
+              {plainPass ? (
+                <Flex>
+                  <Flex> </Flex> <Text>{plainPass}</Text>
+                </Flex>
+              ) : (
+                <Flex maxW={"100%"}>
+                  <Input
+                    onChange={handleChange}
+                    placeholder={"Should be more than 5 characters"}
+                    required
+                    type={"password"}
+                    name={"masterPassword"}
+                    value={masterPassword}
+                  />
+                </Flex>
+              )}
+              {err && (
+                <Text
+                  color={"red"}
+                  padding={"3.5"}
+                  borderRadius={"3.5"}
+                  backgroundColor={"ButtonHighlight"}
+                  marginTop={"3.5"}
+                >
+                  {err}
+                </Text>
+              )}
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="purple" mr={3} onClick={handleClick}>
-              Save
-            </Button>
-            <Button onClick={props?.onClose}>Cancel</Button>
+            {!plainPass && (
+              <Button colorScheme="purple" mr={3} onClick={handleClick}>
+                Show Password
+              </Button>
+            )}
+            <Button onClick={handleClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

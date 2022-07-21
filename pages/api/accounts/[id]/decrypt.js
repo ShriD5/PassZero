@@ -26,7 +26,7 @@ export default async function handler(req, res) {
           );
           return res.status(201).json({ success: true, data: dcpt });
         } else {
-          return res.status(400), json({ success: false });
+          return res.status(400).json({ success: false });
         }
       } catch (error) {
         console.log(error);

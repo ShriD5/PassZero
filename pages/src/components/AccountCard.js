@@ -1,19 +1,7 @@
-import { Button, Center, Heading, Stack, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, Stack, Flex, Text } from "@chakra-ui/react";
 import { EditIcon, ViewIcon } from "@chakra-ui/icons";
-import { UpdateAcc } from "../utils/axios.utils";
-import { fetchAccount } from "../utils/axios.utils";
-import { useState, useEffect } from "react";
-import { useDisclosure } from "@chakra-ui/react";
-import ViewModal from "./viewModal";
 
-export default function Card({ name, website }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    UpdateAcc(masterPassword, accountName, website, password);
-  };
-
+export default function AccountCard({ name, website, onShowClick }) {
   return (
     <Center py={6}>
       <Stack
@@ -37,14 +25,7 @@ export default function Card({ name, website }) {
             <Text>{name}</Text>
             <Text>({website})</Text>
           </Flex>
-          <Flex justifyContent="center" alignItems="center" gap={"1"}>
-            <Text>Nice</Text>
-          </Flex>
 
-          {/* <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text> */}
-          {/* <Flex justifyContent='center' alignItems='center'>
-            <Text fontFamily={'heading'}> (devu.nm21@gmail.com)</Text>
-          </Flex> */}
           <Flex gap={"6"}>
             {" "}
             <Button
@@ -58,14 +39,13 @@ export default function Card({ name, website }) {
               bg={"purple.200"}
               borderRadius={"100%"}
               _hover={{ color: "pink.400", backgroundColor: "purple.600" }}
-              onClick={(handleClick, onOpen)}
+              onClick={onShowClick}
             >
               <ViewIcon w={3} h={3} />{" "}
             </Button>
           </Flex>
         </Stack>
       </Stack>
-      <ViewModal isOpen={isOpen} onClose={onClose} />
     </Center>
   );
 }
